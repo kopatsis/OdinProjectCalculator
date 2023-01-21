@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div class="whole">
+        <div class = "display"></div>
+        <div class="row one">
+            <button class="num butt" id="7">7</button>
+            <button class="num butt" id="8">8</button>
+            <button class="num butt" id="9">9</button>
+            <button class="op butt" id="divide">÷</button>
+        </div>
+        <div class="row two">
+            <button class="num butt" id="4">4</button>
+            <button class="num butt" id="5">5</button>
+            <button class="num butt" id="6">6</button>
+            <button class="op butt" id="times">×</button>
+        </div>
+        <div class="row three">
+            <button class="num butt" id="1">1</button>
+            <button class="num butt" id="2">2</button>
+            <button class="num butt" id="3">3</button>
+            <button class="op butt" id="minus">-</button>
+        </div>
+        <div class="row four">
+            <button class="fact butt">!</button>
+            <button class="num butt" id="0">0</button>
+            <button class = "butt" id="dot">.</button>
+            <button class="op butt" id="plus">+</button>
+        </div>
+        <div class="bottom">
+            <button class = "butt" id="reset">reset</button>
+            <button class = "butt" id="percent">%</button>
+            <button class = "butt" id="delete">⌫</button>
+            <button class = "butt" id="eq">=</button>
+        </div>
+    </div>
+
+    <style>
+
+        .whole{
+            display: flex;
+            /* justify-content: center; */
+            flex-direction: column;
+            /* align-items: center; */
+            border: 6px solid #39FF14;
+            border-radius: 10px;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 40px;
+            background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
+            font-size: 35px;
+            
+        }
+
+        .display{
+            color: #39FF14;
+            background-color: black;
+            text-align: right;
+            margin: 15px 0 25px 0;
+            padding: 8px;
+            border-radius: 5px;
+        }
+
+        body{
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+            margin: 0;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+
+        }
+
+        html{
+            background: linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%);
+            height: 100%;
+        }
+
+        button{
+            font-size: 35px;
+            min-width: 98px;
+            background: black;
+            color: #39FF14;
+            border:none;
+            margin: -1px;
+            border: 3px solid #39FF14;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all .12s ease;
+        }
+
+        .clicked{
+            /* border: 3px solid white; */
+            background: #5A5A5A;
+        }
+
+    </style>
+
+    <script>
+
+        var curnum = 0;
+        var curnumSt = `${curnum}`;
+        const display = document.querySelector('.display');
+        display.textContent = curnumSt;
+
+        const numButtons = document.querySelectorAll('.num');
+        numButtons.forEach(button => button.addEventListener('click', function displayNum(event){
+            if (decIn == false){
+                curnum = curnum*10 + parseInt(event.target.textContent);
+                curnumSt = `${curnum}`;                
+                display.textContent = curnumSt;
+            } else{
+                curnum += parseFloat(event.target.textContent)*(Math.pow(10, decPlace));
+                curnum = Math.round(curnum * Math.pow(10,decPlace*-1)) / Math.pow(10,decPlace*-1);
+                decPlace--;
+                if(event.target.textContent == '0'){
+                    curnumSt += '0';
+                } else {
+                    curnumSt = `${curnum}`;
+                }
+                display.textContent = curnumSt;
+            }
+        }));
+
+        var decPlace = 0;
+        var decIn = false;
+        const decButton = document.querySelector('#dot');
+        decButton.addEventListener('click', function decPt() {
+            if (decIn == true) return;
+            decIn = true;
+            curnumSt = `${curnum}`;
+            curnumSt += '.';
+            display.textContent = curnumSt;
+            decPlace--;
+        });
+
+        const resetButton = document.querySelector('#reset');
+        resetButton.addEventListener('click', function reset(){
+            curnum = 0;
+            curnumSt = `${curnum}`;
+            display.textContent = curnumSt;
+            decIn = false;
+            decPlace = 0;
+            currArray.length = 0;
+        });
+
+        var currArray = [];
+        const operators = document.querySelectorAll('.op');
+        operators.forEach(operator => operator.addEventListener('click', function operate(event){
+            currArray.push(curnum);
+            currArray.push(event.target.textContent);
+            decIn = false;
+            decPlace = 0;
+            curnum = 0;
+        }));
+
+        const equals = document.querySelector('#eq');
+        equals.addEventListener('click', function allOperations(){
+            currArray.push(curnum);
+            let firstnum = currArray[0];
+            for(let i = 1; i < currArray.length; i+=2){
+                let operation = currArray[i];
+                let secondnum = currArray[i+1];
+                switch(operation){
+                    case "+": 
+                        firstnum = firstnum + secondnum;
+                        break;
+                    case "-": 
+                        firstnum = firstnum - secondnum;
+                        break;
+                    case "×": 
+                        firstnum = firstnum * secondnum;
+                        break;
+                    case "÷": 
+                        firstnum = firstnum / secondnum;
+                        break;
+                }
+            }
+            curnum = firstnum;
+            currArray.length = 0;
+            decIn = false;
+            decPlace = 0;
+            curnumSt = `${curnum}`;
+            display.textContent = curnumSt; 
+        });
+
+        const percent = document.querySelector('#percent');
+        percent.addEventListener('click', function perc(){
+            curnum /= 100;
+            curnumSt = `${curnum}`;
+            display.textContent = curnumSt;             
+        });
+
+        const backs = document.querySelector('#delete');
+        backs.addEventListener('click', function bs(){
+            if (curnumSt.length > 1){curnumSt = curnumSt.slice(0,-1);}
+            else {curnumSt = '0';}
+            display.textContent = curnumSt;
+            curnum = parseFloat(curnumSt);
+        });
+
+        const fact = document.querySelector('.fact');
+        fact.addEventListener('click', function factorial(){
+            if (curnum > 16) return;
+            if (curnum < 0) return;
+            if (!Number.isInteger(curnum)) return;
+            if (curnum == 0 || curnum == 1) curnum = 1;
+            for (let i = curnum - 1; i > 1; i--){
+                curnum *= i;
+            }
+            curnumSt = `${curnum}`;
+            display.textContent = curnumSt;     
+        });
+
+        const buttons = document.querySelectorAll('.butt');
+        buttons.forEach(button => button.addEventListener('click', function classAdd(event){
+            event.target.classList.add('clicked');
+        }));
+
+        buttons.forEach(button => button.addEventListener('transitionend', function classRem(event){
+            event.target.classList.remove('clicked');
+        }));
+
+        window.addEventListener('keydown', function clicker(event){
+            let key = event.keyCode;
+            let shifted = event.shiftKey;
+            if(key==8) backs.click();
+            if(key==9) resetButton.click();
+            if(key==13) equals.click();
+            if(key==48) numButtons[9].click();
+            if(key==49 && !shifted) numButtons[6].click();
+            if(key==49 && shifted) fact.click();
+            if(key==50) numButtons[7].click();
+            if(key==51) numButtons[8].click();
+            if(key==52) numButtons[3].click();
+            if(key==53 && !shifted) numButtons[4].click();
+            if(key==53 && shifted) percent.click();            
+            if(key==54) numButtons[5].click();
+            if(key==55) numButtons[0].click();
+            if(key==56 && shifted) operators[1].click();
+            if(key==56 && !shifted) numButtons[1].click();
+            if(key==57) numButtons[2].click();
+            if(key==187 && shifted) operators[3].click();
+            if(key==187 && !shifted) equals.click();
+            if(key==189) operators[2].click();
+            if(key==190) decButton.click();
+            if(key==191) operators[0].click();
+        });
+
+    </script>
+</body>
+</html>
