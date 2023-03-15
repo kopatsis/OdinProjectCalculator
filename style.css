@@ -1,0 +1,58 @@
+.whole{
+    display: flex;
+    /* justify-content: center; */
+    flex-direction: column;
+    /* align-items: center; */
+    border: 6px solid #39FF14;
+    border-radius: 10px;
+    font-family: 'Courier New', Courier, monospace;
+    /* padding: min(7.4vw, 40px); */
+    background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
+    font-size: min(6.4vw, 40px);
+    
+}
+
+.display{
+    color: #39FF14;
+    background-color: black;
+    text-align: right;
+    margin: 0 0 25px 0;
+    padding: 8px;
+    border-radius: 5px;
+}
+
+body{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    margin: 0;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+}
+
+html{
+    background: linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%);
+    height: 100%;
+}
+
+button{
+    font-size: min(6.4vw, 40px);
+    width: min(18vw, 120px);
+    background: black;
+    color: #39FF14;
+    border:none;
+    margin: -1px;
+    border: 3px solid #39FF14;
+    border-radius: 5px;
+    cursor: pointer;
+    
+}
+
+.clicked{
+    /* border: 3px solid white; */
+    background: #5A5A5A;
+    transition: all .12s ease;
+}
