@@ -82,6 +82,7 @@ equals.addEventListener('click', function allOperations(){
     decPlace = 0;
     curnumSt = `${curnum}`;
     display.textContent = curnumSt; 
+    curnum = 0;
 });
 
 const percent = document.querySelector('#percent');
@@ -121,28 +122,26 @@ buttons.forEach(button => button.addEventListener('transitionend', function clas
     event.target.classList.remove('clicked');
 }));
 
-window.addEventListener('keydown', function clicker(event){
-    let key = event.keyCode;
-    let shifted = event.shiftKey;
-    if(key==8) backs.click();
-    if(key==9) resetButton.click();
-    if(key==13) equals.click();
-    if(key==48) numButtons[9].click();
-    if(key==49 && !shifted) numButtons[6].click();
-    if(key==49 && shifted) fact.click();
-    if(key==50) numButtons[7].click();
-    if(key==51) numButtons[8].click();
-    if(key==52) numButtons[3].click();
-    if(key==53 && !shifted) numButtons[4].click();
-    if(key==53 && shifted) percent.click();            
-    if(key==54) numButtons[5].click();
-    if(key==55) numButtons[0].click();
-    if(key==56 && shifted) operators[1].click();
-    if(key==56 && !shifted) numButtons[1].click();
-    if(key==57) numButtons[2].click();
-    if(key==187 && shifted) operators[3].click();
-    if(key==187 && !shifted) equals.click();
-    if(key==189) operators[2].click();
-    if(key==190) decButton.click();
-    if(key==191) operators[0].click();
+window.addEventListener('keyup', function clicker(event){
+    let key = event.key;
+    if(key=="Backspace") backs.click();
+    else if(key=="Delete") resetButton.click();
+    else if(key=="=" || key=="Enter") equals.click();
+    else if(key=="!") fact.click();
+    else if(key=="%") percent.click();   
+    else if(key==".") decButton.click();     
+    else if(key=="/") operators[0].click();
+    else if(key=="*") operators[1].click();
+    else if(key=="-") operators[2].click();
+    else if(key=="+") operators[3].click();
+    else if(key=="7") numButtons[0].click();
+    else if(key=="8") numButtons[1].click();
+    else if(key=="9") numButtons[2].click();
+    else if(key=="4") numButtons[3].click();
+    else if(key=="5") numButtons[4].click();
+    else if(key=="6") numButtons[5].click();
+    else if(key=="1") numButtons[6].click();
+    else if(key=="2") numButtons[7].click();
+    else if(key=="3") numButtons[8].click();
+    else if(key=="0") numButtons[9].click();
 });
